@@ -12,8 +12,6 @@ const Nav = React.createClass({
       }
         this.refs.location.value = '';
         window.location.hash = '#/?location=' + encodedLocation;
-
-      alert(location);
     },
     render: function () {
         return (

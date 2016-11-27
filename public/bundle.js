@@ -24971,8 +24971,6 @@
 	        }
 	        this.refs.location.value = '';
 	        window.location.hash = '#/?location=' + encodedLocation;
-
-	        alert(location);
 	    },
 	    render: function render() {
 	        return React.createElement(
