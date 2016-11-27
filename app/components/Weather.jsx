@@ -17,7 +17,9 @@ var Weather = React.createClass({
 
         this.setState({
             isLoading: true,
-            errorMessage: undefined
+            errorMessage: undefined,
+            location: undefined,
+            temp: undefined
         });
         openWeatherMap
             .getTemp(location)
@@ -38,10 +40,33 @@ var Weather = React.createClass({
             })
 
 
+    },
+    componentDidMount: function () {
+        var location = this.props.location.query.location;
+        var isValidLocation = location && location.length > 0;
+
+        if (!isValidLocation) {
+            return;
+        }
+
+        this.handleSearch(location);
+        window.location.hash = '#/';
+    },
+    componentWillReceiveProps: function (newProps) {
+        var location = newProps.location.query.location;
+
+        var isValidLocation = location && location.length > 0;
+
+        if (!isValidLocation) {
+            return;
+        }
+
+        this.handleSearch(location);
+        window.location.hash = '#/';
 
     },
     render: function () {
-        const {isLoading,temp,location,errorMessage} = this.state;
+        const {isLoading, temp, location, errorMessage} = this.state;
 
         function renderMessage() {
             if (isLoading) {
@@ -52,17 +77,18 @@ var Weather = React.createClass({
                 return;
             }
 
-            return  <WeatherMessage location={location} temp={temp}/>
+            return <WeatherMessage location={location} temp={temp}/>
         }
 
         function renderError() {
             console.log(typeof errorMessage)
-            if(typeof errorMessage === 'string') {
+            if (typeof errorMessage === 'string') {
                 return (
                     <ErrorModal message={errorMessage}/>
                 )
             }
         }
+
         return (
             <div>
                 <h1 className="text-center page-title">Get Weather</h1>

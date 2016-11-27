@@ -24963,7 +24963,16 @@
 
 	    onSearch: function onSearch(e) {
 	        e.preventDefault();
-	        alert('Not yet wired up!');
+	        var location = this.refs.location.value;
+	        var isValidaLocation = location && location.length > 0;
+	        var encodedLocation = encodeURIComponent(location);
+	        if (!isValidaLocation) {
+	            return;
+	        }
+	        this.refs.location.value = '';
+	        window.location.hash = '#/?location=' + encodedLocation;
+
+	        alert(location);
 	    },
 	    render: function render() {
 	        return React.createElement(
@@ -25021,7 +25030,7 @@
 	                        React.createElement(
 	                            'li',
 	                            null,
-	                            React.createElement('input', { type: 'search', placeholder: 'Search weather by city' })
+	                            React.createElement('input', { type: 'search', placeholder: 'Search weather by city', ref: 'location' })
 	                        ),
 	                        React.createElement(
 	                            'li',
@@ -25095,7 +25104,9 @@
 
 	        this.setState({
 	            isLoading: true,
-	            errorMessage: undefined
+	            errorMessage: undefined,
+	            location: undefined,
+	            temp: undefined
 	        });
 	        openWeatherMap.getTemp(location).then(function (temp) {
 	            console.log(temp);
@@ -25111,6 +25122,29 @@
 	                errorMessage: error.message
 	            });
 	        });
+	    },
+	    componentDidMount: function componentDidMount() {
+	        var location = this.props.location.query.location;
+	        var isValidLocation = location && location.length > 0;
+
+	        if (!isValidLocation) {
+	            return;
+	        }
+
+	        this.handleSearch(location);
+	        window.location.hash = '#/';
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	        var location = newProps.location.query.location;
+
+	        var isValidLocation = location && location.length > 0;
+
+	        if (!isValidLocation) {
+	            return;
+	        }
+
+	        this.handleSearch(location);
+	        window.location.hash = '#/';
 	    },
 	    render: function render() {
 	        var _state = this.state,
@@ -25142,6 +25176,7 @@
 	                return React.createElement(ErrorModal, { message: errorMessage });
 	            }
 	        }
+
 	        return React.createElement(
 	            'div',
 	            null,
