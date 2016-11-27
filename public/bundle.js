@@ -26736,7 +26736,7 @@
 /* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(8);
 
@@ -26752,9 +26752,47 @@
 	// stateless function.
 	var About = function About(props) {
 	    return React.createElement(
-	        'h3',
+	        "div",
 	        null,
-	        'About Component'
+	        React.createElement(
+	            "h1",
+	            { className: "text-center" },
+	            "About"
+	        ),
+	        React.createElement(
+	            "p",
+	            null,
+	            "This is a weather application build on React, I have built this for The complete React Web App Developer Course"
+	        ),
+	        React.createElement(
+	            "p",
+	            null,
+	            "Here are some of the tools i used:"
+	        ),
+	        React.createElement(
+	            "ul",
+	            null,
+	            React.createElement(
+	                "li",
+	                null,
+	                React.createElement(
+	                    "a",
+	                    { href: "https://facebook.github.io/react" },
+	                    "React "
+	                ),
+	                "- This was The JavaScript framework used."
+	            ),
+	            React.createElement(
+	                "li",
+	                null,
+	                React.createElement(
+	                    "a",
+	                    { href: "https://openweathermap.org" },
+	                    "Open Weather Map "
+	                ),
+	                "- I used Open Weather Map to search for weather data by city name."
+	            )
+	        )
 	    );
 	};
 
